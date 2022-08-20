@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <script>
+        // Write a function to get the computer's choice for rock paper scissors
+        function getComputerChoice()
+        {   // Store possible computer choices into an array of choices
+            let choices = ['rock','paper','scissors']
+            // Randomly select one of the three indexes of the array
+            let computerSelection = choices[Math.floor(Math.random() * 3) + 0]
+            // Return Computer's selection
+            return computerSelection;
+        }
+        // Write a function to get the player's choice for rock paper scissors
+        function getPlayerChoice()
+        {
+            let playerSelection = prompt("You're being forced against your will to play Rock paper Scissors. Type in your sleceted choice",'Rock');
+            playerSelection = playerSelection.toLowerCase()
+            return playerSelection;
+        }
+        // Write a function to execute a round of Rock, Paper, Scissors
+        function playRound(playerSelection,computerSelection)
+        {
+            // Get the player's choice
+            const PlayerSelection = getPlayerChoice();
+            // Get the computer's choice
+            const ComputerSelection = getComputerChoice();
+         // Write the possible cases if the player and the computer have the same choice
+            if(PlayerSelection == ComputerSelection)
+                {
+                    return("It's a draw!")    
+                }
+            // Write the possible cases if the player chooses rock
+            if(PlayerSelection == 'rock')
+                {
+                    if(ComputerSelection=='paper')
+                    {
+                       return("You Lose! Paper beats Rock!") 
+                    }
+                    else if(ComputerSelection=='scissors')
+                    {
+                        return("You Win! Rock beats Scissors!")
+                    }
+                }
+            // Write the possible cases if the player chooses paper
+            if(PlayerSelection=='paper')
+                {
+                    if(ComputerSelection=='rock')
+                    {
+                        return("You Win! Paper beats Rock!")
+                    }
+                    else if(ComputerSelection=='scissors')
+                    {
+                        return('You Lose! Scissors beats Paper!')
+                    }
+                }
+            // Write the possible cases if the player chooses scissors
+            if(PlayerSelection=='scissors')
+                {
+                    if(ComputerSelection=='rock')
+                    {
+                        return('You Lose! Rock beats Scissors!')
+                    }
+                    else if(ComputerSelection=='paper')
+                    {
+                        return('You Win! Scissors beats Paper!')
+                    }
+                }
+        }
+        // Write a function to make a 5 round game
+        function game()
+        {
+            let computerScore = 0;
+            let playerScore = 0;
+            let count=0;
+            
+            while(count <5)
+            {
+                let round = playRound();
+                if(round.indexOf('Win') >-1)
+                {
+                    playerScore++
+                    count++;
+                    console.log(playerScore);
+                    console.log(count);
+                }
+                else if(round.indexOf('Lose') >-1)
+                {
+                    computerScore++;
+                    count++;
+                    console.log(playerScore);
+                    console.log(count);
+                }
+                else
+                {
+                    count++;
+                    console.log(playerScore);
+                    console.log(count);
+                }
+            }
+            return("At the end of the game, you had: " + playerScore + ' points' + ', and the computer had: ' +  computerScore + ' points')
+        }
+    </script>
+    
+</body>
+</html>
