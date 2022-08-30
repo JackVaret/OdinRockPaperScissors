@@ -7,6 +7,10 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <button class="rock">Rock</button>
+    <button class="paper">Paper</button>
+    <button class="scissors">Scissors</button>
+
     <script>
         // Write a function to get the computer's choice for rock paper scissors
         function getComputerChoice()
@@ -80,7 +84,7 @@
             let playerScore = 0;
             let count=0;
             
-            while(count <5)
+            while(count <100)
             {
                 let round = playRound();
                 if(round.indexOf('Win') >-1)
@@ -106,6 +110,19 @@
             }
             return("At the end of the game, you had: " + playerScore + ' points' + ', and the computer had: ' +  computerScore + ' points')
         }
+        // Add an Event Listener for each of the buttons
+        const rock = document.querySelector('.rock');
+        // Add an event listener for the rock button
+        // When the user clicks on the rock button, run the playround function with rock as the playerselection
+        rock.addEventListener('click', playRound('rock',getComputerChoice()));
+        const paper = document.querySelector('.paper');
+        // Add an event listener for the rock button
+        // When the user clicks on the rock button, run the playround function with rock as the playerselection
+        rock.addEventListener('click', playRound('paper',getComputerChoice()));
+        const scissors = document.querySelector('.scissors');
+        // Add an event listener for the rock button
+        // When the user clicks on the rock button, run the playround function with rock as the playerselection
+        rock.addEventListener('click', playRound('scissors',getComputerChoice()));
     </script>
     
 </body>
