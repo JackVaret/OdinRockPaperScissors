@@ -7,12 +7,19 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <div class="buttons">
     <button class="rock">Rock</button>
     <button class="paper">Paper</button>
     <button class="scissors">Scissors</button>
-
+    </div>
+    
+    <div id="results"></div>
+    <div id="resultsMessage"></div>
     <script>
         // Write a function to get the computer's choice for rock paper scissors
+        // Create variables for the player's score and the computer's score
+        let playerScore = 0;
+        let computerScore = 0;
         function getComputerChoice()
         {   // Store possible computer choices into an array of choices
             let choices = ['rock','paper','scissors']
@@ -21,108 +28,133 @@
             // Return Computer's selection
             return computerSelection;
         }
-        // Write a function to get the player's choice for rock paper scissors
-        function getPlayerChoice()
-        {
-            let playerSelection = prompt("You're being forced against your will to play Rock paper Scissors. Type in your sleceted choice",'Rock');
-            playerSelection = playerSelection.toLowerCase()
-            return playerSelection;
-        }
-        // Write a function to execute a round of Rock, Paper, Scissors
-        function playRound(playerSelection,computerSelection)
-        {
-            // Get the player's choice
-            const PlayerSelection = getPlayerChoice();
-            // Get the computer's choice
-            const ComputerSelection = getComputerChoice();
-         // Write the possible cases if the player and the computer have the same choice
-            if(PlayerSelection == ComputerSelection)
-                {
-                    return("It's a draw!")    
-                }
-            // Write the possible cases if the player chooses rock
-            if(PlayerSelection == 'rock')
-                {
-                    if(ComputerSelection=='paper')
-                    {
-                       return("You Lose! Paper beats Rock!") 
-                    }
-                    else if(ComputerSelection=='scissors')
-                    {
-                        return("You Win! Rock beats Scissors!")
-                    }
-                }
-            // Write the possible cases if the player chooses paper
-            if(PlayerSelection=='paper')
-                {
-                    if(ComputerSelection=='rock')
-                    {
-                        return("You Win! Paper beats Rock!")
-                    }
-                    else if(ComputerSelection=='scissors')
-                    {
-                        return('You Lose! Scissors beats Paper!')
-                    }
-                }
-            // Write the possible cases if the player chooses scissors
-            if(PlayerSelection=='scissors')
-                {
-                    if(ComputerSelection=='rock')
-                    {
-                        return('You Lose! Rock beats Scissors!')
-                    }
-                    else if(ComputerSelection=='paper')
-                    {
-                        return('You Win! Scissors beats Paper!')
-                    }
-                }
-        }
-        // Write a function to make a 5 round game
-        function game()
-        {
-            let computerScore = 0;
-            let playerScore = 0;
-            let count=0;
-            
-            while(count <100)
+        // Create a computerSelection
+        let computerSelection = getComputerChoice();
+        // Write a function to execute a round of RPS based on the player's chocie
+        function rockRound(computerSelection) {
+            computerSelection = getComputerChoice();
+            if(computerSelection=='rock')
             {
-                let round = playRound();
-                if(round.indexOf('Win') >-1)
-                {
-                    playerScore++
-                    count++;
-                    console.log(playerScore);
-                    console.log(count);
-                }
-                else if(round.indexOf('Lose') >-1)
-                {
-                    computerScore++;
-                    count++;
-                    console.log(playerScore);
-                    console.log(count);
-                }
-                else
-                {
-                    count++;
-                    console.log(playerScore);
-                    console.log(count);
-                }
+                document.getElementById('resultsMessage').innerText= "It's a Draw!";
             }
-            return("At the end of the game, you had: " + playerScore + ' points' + ', and the computer had: ' +  computerScore + ' points')
+            else if(computerSelection=='paper')
+                 {   // Append a message of the results to the resutls div
+                document.getElementById('resultsMessage').innerText = "You Lose! Paper beats Rock!";
+                computerScore++;
+                updateScreen();
+                 }
+            else if(computerSelection=='scissors')
+                {
+                document.getElementById('resultsMessage').innerText = "You Win! Rock beats Scissors!";
+                playerScore++;
+                updateScreen();
+                }
         }
+        function paperRound(computerSelection) {
+            computerSelection = getComputerChoice();
+
+            if(computerSelection=='paper')
+            {
+                document.getElementById('resultsMessage').innerText= "It's a Draw!";
+            }
+            else if(computerSelection=='rock')
+                {
+                document.getElementById('resultsMessage').innerText="You Win! Paper beats Rock!";
+                playerScore++;
+                updateScreen();
+                }
+            else if(computerSelection=='scissors')
+                {
+                document.getElementById('resultsMessage').innerText= 'You Lose! Scissors beats Paper!';
+                computerScore++;
+                updateScreen();
+                }
+        }
+        function scissorsRound(computerSelection) {
+            computerSelection = getComputerChoice();
+
+            if(computerSelection=='scissors')
+            {
+                document.getElementById('resultsMessage').innerText= "It's a Draw!";
+            }
+            else if(computerSelection=='rock')
+                {
+                    document.getElementById('resultsMessage').innerText= 'You Lose! Rock beats Scissors!';
+                    computerScore++;
+                    updateScreen();
+                }
+            else if(computerSelection=='paper')
+                {
+                document.getElementById('resultsMessage').innerText='You Win! Scissors beats Paper!';
+                playerScore++;
+                updateScreen();
+                }
+        }
+        
         // Add an Event Listener for each of the buttons
         const rock = document.querySelector('.rock');
         // Add an event listener for the rock button
         // When the user clicks on the rock button, run the playround function with rock as the playerselection
-        rock.addEventListener('click', playRound('rock',getComputerChoice()));
+        rock.addEventListener('click', rockRound);
+        // Add an event listener for the paper button
         const paper = document.querySelector('.paper');
-        // Add an event listener for the rock button
-        // When the user clicks on the rock button, run the playround function with rock as the playerselection
-        rock.addEventListener('click', playRound('paper',getComputerChoice()));
+        // When the user clicks on the paper button, run the playRoudn function with paper as the player's selected choice
+        paper.addEventListener('click', paperRound)
+        // Add an event listener for the scissors button
         const scissors = document.querySelector('.scissors');
-        // Add an event listener for the rock button
-        // When the user clicks on the rock button, run the playround function with rock as the playerselection
-        rock.addEventListener('click', playRound('scissors',getComputerChoice()));
+        // When the user clicks on the scissors button, run the playRound function with scissors as the player's choice
+        scissors.addEventListener('click', scissorsRound)
+        
+        // Add a div for displaying results
+        const results = document.querySelector('.results');
+        // Append the playerScore and computerScore to the results div
+        document.getElementById('results').innerText = "Player Score: " + playerScore + " Computer Score: " + computerScore;
+        // Create a function that initiates a countdown sequence into refreshing the page
+        // Create a new div to hold the number countdown
+        const countdown = document.createElement("div");
+        countdown.id = "count";
+        countdown.textContent = "";
+        document.body.appendChild(countdown);
+        // Create a function to initate a countdown sequence
+        // Create a timer to slow down the for loop
+        const sleep = (time) => {
+        return new Promise(resolve => setTimeout(resolve, time))
+        }
+        async function countDown() {
+            // Create a loop from 10 to 0
+            countdown.textContent = "After a 10 secound countdown, the page shall refresh!";
+            for(let i = 10; i>0; i--) 
+            {
+                await sleep(1000)
+                countdown.innerText = i + "...";
+                
+            }
+            // Reload the window
+            console.log("Countdown Complete");
+            window.location.reload();
+        }
+        // Create a function to initiate the end of game sequence
+        function endOfGame() {
+                document.getElementById('results').innerText = "Congratulations! The Game is Over!"
+                document.getElementById('resultsMessage').innerText = "Final Standings: " + "Player Score: " + playerScore + " Computer Score: " + computerScore;
+                rock.removeEventListener('click',rockRound);
+                paper.removeEventListener('click',paperRound);
+                scissors.removeEventListener('click',scissorsRound);
+                countDown();
+        }
+        
+        // Create a function to update the screen
+        function updateScreen () {
+            document.getElementById('results').innerText = "Player Score: " + playerScore + " Computer Score: " + computerScore;
+            if(playerScore==5 || computerScore ==5)
+            {
+                endOfGame();
+            }
+        }
+        
+        
+        
+        
     </script>
     
 </body>
